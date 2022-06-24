@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercies Two</title>
+</head>
+<body>
+
+  <!-- 2.1 -->
+  <p id="text">JavaScript Exercises - w3resource</p>
+  <div>
+  <button id="jsstyle" onclick="js_style()">Style</button>
+  </div>
+
+  <!-- 2.2 -->
+  <form id="form1" onsubmit="getFormvalue()">
+    First name: <input type="text" name="fname" value="David"><br>
+    Last name: <input type="text" name="lname" value="Beckham"><br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <!-- 2.3 -->
+  <button class="setBg">Set Backgound</button>
+  <p class="text-3">This is text</p>
+
+  <!-- 2.4 -->
+  <p>
+    <a id="w3r" type="text/html" hreflang="en-us" rel="nofollow" target="_self" href="https://www.w3resource.com/">
+      w3resource
+    </a>
+  </p>
+  <button onclick="getAttributes()">Click here to get  attributes value</button>
+
+  <!-- 2.5 -->
+  <table id="sampleTable" border="1" style="margin-top: 20px">
+    <tr>
+      <td>Row1 cell1</td>
+      <td>Row1 cell2</td>
+    </tr>
+    <tr>
+      <td>Row2 cell1</td>
+      <td>Row2 cell2</td>
+    </tr>
+  </table>
+  <br>
+    <input type="button" onclick="insert_Row()" value="Insert row"> 
+
+  <!-- 2.6 -->
+  <table id="myTable" border="1" style="margin-top: 30px;"> 
+    <tr>
+      <td>Row1 cell1</td> 
+      <td>Row1 cell2</td>
+    </tr> 
+    <tr>
+      <td>Row2 cell1</td> 
+      <td>Row2 cell2</td>
+    </tr> 
+    <tr>
+      <td>Row3 cell1</td> 
+      <td>Row3 cell2</td>
+    </tr> 
+    </table>
+    <form> 
+      <input type="button" onclick="changeContent()" value="Change content"> 
+    </form>
+
+  <!-- 2.7 -->
+  <form style="margin-top:30px">
+    <label >Số hàng</label>
+    <input type="text" name="row">
+    <label for="">Số cột</label>
+    <input type="text" name="col">
+    <input type="button" onclick="createTable()" value="Create the table">
+    <table id="secondTable" border="1"></table>
+  </form>
+
+  <!-- 2.8 -->
+  <form style="margin-top:30px">
+    <select id="colorSelect">
+      <option>Red</option>
+      <option>Green</option>
+      <option>White</option>
+      <option>Black</option>
+    </select>
+    <input type="button" onclick="removecolor()" value="Select and Remove">
+  </form>
+
+  <!-- 2.9 -->
+  <form style="margin-top:30px">
+    Select your favorite Color :
+    <select id="mySelect">
+      <option>Red</option>
+      <option>Green</option>
+      <option>Blue</option>
+      <option>White</option>
+    </select>
+    <input type="button" onclick="getOptions()" value="Count and Output all items">
+  </form>
+
+  <!-- 2.10 -->
+  <p>Input radius value and get the volume of a sphere.</p>
+  <form method="post" id="calculateForm">
+    <label for="radius">Radius</label>
+    <input type="text" name="radius" id="radius" required>
+    <label for="volume">Volume</label>
+    <input type="text" name="volume" id="volume">
+    <input type="submit" value="Calculate" id="Calculate">   
+  </form>
+
+  <!-- 2.11 -->
+  <div style="margin-top:30px">
+    <button id="show-image"  onclick="display_random_image();">Show Image</button>
+    <img src="" id="img_shower" alt=""> 
+  </div>
+
+  <!-- 2.12 -->
+  <p class="high-light">[<a href="#">On mouse over here bold words of the following paragraph will be highlighted</a>]</p>
+  <p><strong>We</strong> have just started <strong>this</strong> section for the users (<strong>beginner</strong>
+    to intermediate) who <strong>want</strong> to work with <strong>various</strong> JavaScript 
+    <strong>problems</strong> and write scripts online to <strong>test</strong> their JavaScript <strong>skill</strong>.</p>
+
+  <!--2.13 -->
+  <button class="window-btn">Get width and height of the window</button>
+  <script src="exercises-two.js"></script>
+</body>
+</html>
