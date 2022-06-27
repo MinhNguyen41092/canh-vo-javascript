@@ -1,0 +1,44 @@
+<section class="container">
+  <div class="action">
+    <div class="action-left">
+      <button class="btn-primary">Add new product</button>
+      <button class="btn-warning">Remove selected</button>
+      <button class="btn-danger">Remove all</button>
+    </div>
+    <div class="action-right">
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Search" />
+        <button class="search-btn">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="overlay"></div>
+  <form action="" class="form-modal">
+    <h3 class="form-heading">Add New Product</h3>
+    <div class="form-group">
+      <label for="product-name" class="form-label">Name</label>
+      <input type="text" id="product-name">
+      <span class="form-message">This field is required</span>
+    </div>
+    <div class="form-group">
+      <label for="product-price" class="form-label">Price</label>
+      <input type="number" id="product-price">
+      <span class="form-message">This field is required</span>
+    </div>
+    <div class="form-group">
+      <label for="product-name" class="form-label">Choose product image</label>
+      <input type="file" id="product-image">
+    </div>
+    <div class="form-group">
+      <label for="product-des" class="form-label">Description</label>
+      <input type="text" id="product-des">
+      <span class="form-message">This field is required</span>
+    </div>
+    <div class="button-group">
+      <button type="submit" class="btn-primary">Save</button>
+      <button class="btn-warning">Cancel</button>
+    </div>
+  </form>
+</section>

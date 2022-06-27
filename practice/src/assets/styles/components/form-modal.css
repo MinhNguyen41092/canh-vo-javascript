@@ -1,0 +1,13 @@
+.form-modal {
+  padding: 5rem;
+  width: 50%;
+  border-radius: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--primary-color);
+}
+
+.form-heading {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 3rem;
+}
