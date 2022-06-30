@@ -4,6 +4,14 @@ export default class Controller {
     this.view = view
     this.view.bindOpenform()
     this.view.bindCloseform()
-    this.view.validator()
+    this.view.displayImage()
+    // this.view.validator()
+    this.view.bindAddproduct(this.handleAddproduct) 
+  }
+
+  handleAddproduct = (productName, productPrice, productImg, productDes) => {
+    this.view.renderProduct(productName, productPrice, productImg, productDes)
+    this.model.addProduct(productName, productPrice, productImg, productDes)
+      this.view.closeForm()
   }
 }

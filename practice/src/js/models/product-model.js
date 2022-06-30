@@ -4,11 +4,12 @@ export default class Model {
     this.products = []
   }
 
-  addProduct(productName, urlImg, productDes) {
+  addProduct(productName, productPrice, productImg, productDes) {
     const product = {
       id: this.products.length > 0 ? this.products[this.products.length - 1].id + 1 : 1,
       name: productName,
-      img: urlImg,
+      price: productPrice,
+      img: productImg,
       des: productDes
     }
 
