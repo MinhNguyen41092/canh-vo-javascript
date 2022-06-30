@@ -4,7 +4,7 @@ export default class View {
     this.addBtn = this.getElement('#open-form')
     this.closeBtn = this.getElement('#close-form')
     this.modal = this.getElement('.modal')
-    this.erroMessage = this.getElement('.form-message')
+    // this.erroMessage = this.getElement('.form-message')
     this.formInput = document.querySelectorAll('.form-input')
   }
   
@@ -38,13 +38,19 @@ export default class View {
 
   validator() {
     if(this.formInput) {
-      this.formInput.forEach(i => {
-        i.onblur = () => {
-            if(i.value === '') {
-              this.erroMessage.style.display = 'block'
-            }
+      this.formInput.forEach(inputElement => {
+        if(inputElement) {
+          let erroElement = inputElement.parentElement.querySelector('.form-message')
+          inputElement.onblur = () => {
+            if(inputElement.value.trim() === '') erroElement.style.display = 'block'
+          }
+          inputElement.oninput = () => {
+            erroElement.style.display = 'none'
+          }
         }
       })
     }
   }
+
+  
 }
