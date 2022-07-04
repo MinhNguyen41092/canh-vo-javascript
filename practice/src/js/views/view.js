@@ -89,8 +89,12 @@ export default class View {
 
   renderProduct(products) {
     // let content = ''
-    const productList = this.getElement(".product-list")
-    productList.innerHTML = ""
+    const productList = this.getElement('.product-list')
+    if(products.length == 0) {
+      productList.innerHTML = 'There is no products in your store'
+    }
+    else {
+      productList.innerHTML = ""
     products.forEach(product => {
       const productItem = document.createElement('div')
       productItem.classList.add('product-item')
@@ -124,22 +128,26 @@ export default class View {
       productImg.classList.add('product-img')
       imgItem.append(productImg)
       productItem.append(imgItem)
+      const productInfo = document.createElement('div')
+      productInfo.classList.add('product-info')
       const productName = document.createElement('p')
       productName.classList.add('product-name')
       productName.textContent = product.name
-      productItem.append(productName)
+      productInfo.append(productName)
       const productPrice = document.createElement('p')
       productPrice.classList.add('product-price')
-      productPrice.textContent = product.price
-      productItem.append(productPrice)
+      productPrice.textContent = `${product.price}$`
+      productInfo.append(productPrice)
       const productDes = document.createElement('p')
       productDes.classList.add('product-des')
       productDes.textContent = product.des
-      productItem.append(productDes)
+      productInfo.append(productDes)
+      productItem.append(productInfo)
       productList.append(productItem)
 
       this.handlerClickEdit(product)
     })
+    }
   }
 
   handlerClickEdit(product) {
@@ -217,9 +225,21 @@ export default class View {
       this.productItem = this.productList.querySelectorAll('.product-item')
         this.productItem.forEach(item => {
           item.addEventListener('click', e => {
-            item.classList.add('active')
+            item.classList.toggle('active')
+            const itemInfo =  item.querySelectorAll('p')
+            itemInfo.forEach(child => {
+              child.classList.toggle('child-active')
+            })
             const id = item.id
-            handler(id)
+                handler(id)
+            // itemImg.classList.toggle('child-active')
+            // if( e.target.className === 'product-item active' ||
+            //     e.target.className === 'product-img child-active' ||
+            //     e.target.className === 'product-name child-active' ||
+            //     e.target.className === 'product-price child-active' ||
+            //     e.target.className === 'product-des child-active') {
+                  
+            //     }
           })
         })
     })

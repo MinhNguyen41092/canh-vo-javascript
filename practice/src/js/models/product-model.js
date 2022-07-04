@@ -49,8 +49,14 @@ export default class Model {
   }
 
   selectedProduct(id) {
-    this.listId.push(id)
-    return (this.listId)
+    const check = this.listId.indexOf(id)
+    if (check === -1 ) {
+      this.listId.push(id)
+    }
+    else {
+      this.listId.splice(check, 1)
+    }
+    return(this.listId)
   }
 
   deleteSelectedProduct() {
@@ -61,7 +67,6 @@ export default class Model {
       })
       this.products = this.products.filter(item => item !== check[0])
     })
-    console.log(this.products)
     this._commit(this.products)
     return this.products
   }

@@ -6,7 +6,9 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-left: -3rem;
+  gap: 3rem;
+  font-size: 1.8rem;
+  color: var(--primary-color);
 }
 
 .product-item {
@@ -14,7 +16,6 @@
   background-color: var(--primary-color);
   border-radius: 1.5rem;
   width: calc(25% - 3rem);
-  margin-left: 3rem;
   margin-bottom: 2rem;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   cursor: pointer;
@@ -66,7 +67,7 @@
   margin-top: 1rem;
 }
 
-.no-product {
+.product-text {
   color: var(--primary-color);
   font-size: 1.8rem;
   font-weight: 500;
