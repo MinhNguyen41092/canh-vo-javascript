@@ -15,7 +15,7 @@
       <label for="product-image" class="form-label">Choose product image
         <i class="fas fa-image"></i>
       </label>
-      <input type="file" id="product-image" class="form-input img-input" name = "productImg">
+      <input type="file" id="product-image" class="img-input" accept="image/*" name = "productImg">
       <img src="#" alt="Product image" class="display-img" >
     </div>
     <div class="form-group">
@@ -24,7 +24,7 @@
       <span class="form-message"></span>
     </div>
     <div class="button-group">
-      <button type="submit" class="btn-primary" id="save-product">Save</button>
+      <button type="submit" class="btn-primary" id="save-product" name="id">Save</button>
       <button class="btn-warning" id="close-form">Cancel</button>
     </div>
   </form>

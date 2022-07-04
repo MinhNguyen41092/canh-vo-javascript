@@ -1,7 +1,12 @@
 export default class Model {
   constructor() {
-    // The state of the model, an array of todo objects, prepopulated with some data
-    this.products = []
+    this.products = JSON.parse(localStorage.getItem('products')) || []
+    this.listId = []
+  }
+
+  _commit(products) {
+    // this.onProductListChanged(products)
+    localStorage.setItem('products', JSON.stringify(this.products))
   }
 
   addProduct(productName, productPrice, productImg, productDes) {
@@ -14,19 +19,50 @@ export default class Model {
     }
 
     this.products.push(product)
+    this._commit(this.products)
+    return(this.products)
   }
 
-  // Map through all todos, and replace the text of the todo with the specified id
-  editProduct(id, updatedName, updateDes) {
-    this.products = this.todos.map(product =>
-      product.id === id ? { id: product.id, text: updatedName, des: updateDes } : product
+  editProduct(id, updatedName, updatePrice, updateImage, updateDes ) {
+    this.products = this.products.map(product =>
+      product.id == id ? { 
+        id: product.id, 
+        name: updatedName, 
+        price:updatePrice, 
+        img: updateImage, 
+        des: updateDes } : product
     )
+    this._commit(this.products)
+    return(this.products)
   }
 
-  // Filter a todo out of the array by id
   deleteProduct(id) {
-    this.products = this.products.filter(product => product.id !== id)
+    this.products = this.products.filter(product => product.id != id)
+    this._commit(this.products)
+    return(this.products)
   }
 
-  // Flip the complete boolean on the specified todo
+  deleteAllProduct() {
+    this.products.length = 0
+    this._commit(this.products)
+    return this.products
+  }
+
+  selectedProduct(id) {
+    this.listId.push(id)
+    return (this.listId)
+  }
+
+  deleteSelectedProduct() {
+    const listId = this.selectedProduct()
+    listId.forEach(id => {
+      const check = this.products.filter(obj => {
+        return obj.id.toString() === id
+      })
+      this.products = this.products.filter(item => item !== check[0])
+    })
+    console.log(this.products)
+    this._commit(this.products)
+    return this.products
+  }
 }

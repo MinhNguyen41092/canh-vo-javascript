@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-left: -3rem;
 }
 
 .product-item {
@@ -49,11 +50,31 @@
   margin-top: 1rem;
 }
 
+.img-item {
+  display: flex;
+  justify-content: center;
+}
+
+.product-img {
+  height: 20rem;
+}
+
 .product-des {
   color: var(--secondary-color);
   font-size: 1.4rem;
   font-weight: 500;
   margin-top: 1rem;
+}
+
+.no-product {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-left: 2rem;
+}
+
+.active {
+  border: solid 3px var(--btn-primary-color);
 }
 
 @media only screen and (max-width: 1023px) {
