@@ -4,6 +4,7 @@ export default class View {
     this.addBtn = this.getElement('#open-form')
     this.closeBtn = this.getElement('#close-form')
     this.modal = this.getElement('.modal')
+    this.body = this.getElement('body')
     this.saveProduct = this.getElement('#save-product')
     this.formInput = this.formModal.querySelectorAll('.form-input')
     this.imageInput = this.getElement('.img-input')
@@ -22,9 +23,13 @@ export default class View {
     this.formInput.forEach(input => {
       input.value = ''
     })
+    this.imageInput.value = ''
     this.imageProduct.style.display = 'none'
+    this.imageProduct.src =''
     this.getElement("#save-product").value = ''
-
+    this.saveProduct.style.opacity = 0.3
+    this.saveProduct.style.cursor = 'default'
+    this.saveProduct.disabled = false
   }
 
   openForm() {
@@ -35,7 +40,6 @@ export default class View {
     this.addBtn.addEventListener('click', e => {
       this.openForm()
       this._resetInput()
-      
     })
   }
 
@@ -55,10 +59,11 @@ export default class View {
   }
 
   validateInput() {
+
     if(this.formInput) {
       this.formInput.forEach(inputElement => {
         if(inputElement) {
-          let errorElement = inputElement.parentElement.querySelector('.form-message')
+          const errorElement = inputElement.parentElement.querySelector('.form-message')
           inputElement.onblur = () => {
             if(inputElement.value.trim() === '') errorElement.innerText = 'This field is required'
           }
@@ -68,6 +73,7 @@ export default class View {
         }
       })
     }
+    
   }
 
   displayImage() {
@@ -79,6 +85,27 @@ export default class View {
         displayImg.style.display = 'block'
       })
       reader.readAsDataURL(this.imageInput.files[0])
+    })
+  }
+
+  checkInput() {
+    this.imageInput.value = ''
+    this.imageProduct.src = ''
+    this.input = this.formModal.querySelectorAll('input')
+    this.input.forEach(i => {
+      i.addEventListener('input', () => {
+        this.input.forEach(v => {
+          if(v.value === '' || this.imageInput.value === '' ) {
+            this.saveProduct.style.opacity = 0.3
+            this.saveProduct.style.cursor = 'default'
+            this.saveProduct.disabled = false
+          }
+          else {
+            this.saveProduct.style.opacity = 1
+            this.saveProduct.style.cursor = 'pointer'
+          }
+        })
+      })
     })
   }
 
@@ -145,6 +172,7 @@ export default class View {
       productItem.append(productInfo)
       productList.append(productItem)
 
+      -this._resetInput()
       this.handlerClickEdit(product)
     })
     }
@@ -154,31 +182,41 @@ export default class View {
     this.item = this.getElement(`.edit-product-${product.id}`)
     this.item.addEventListener('click', e => {
         this.openForm()
+        this.saveProduct.style.opacity = 1
+        this.saveProduct.style.cursor = 'pointer'
+        
         this.getElement("#product-name").value = product.name
         this.getElement("#product-price").value = product.price
         this.getElement(".display-img").src = product.img
         this.getElement(".display-img").style.display = 'block'
         this.getElement("#product-des").value = product.des
         this.getElement("#save-product").value = product.id
-
+        
         this.saveProduct.setAttribute('Save-product', product.id)
     })
   }
 
   bindAddproduct(handler) {
+    this.checkInput()
     this.formModal.addEventListener('submit', e => {
       e.preventDefault()
-      let productName = document.forms['formModal']['productName'].value
-      let productPrice = document.forms['formModal']['productPrice'].value
-      let productImg = document.querySelector('.display-img').src
-      let productDes = document.forms['formModal']['productDes'].value
-      let productId = document.forms['formModal']['id'].value
+      const productName = document.forms['formModal']['productName'].value
+      const productPrice = document.forms['formModal']['productPrice'].value
+      const inputImg = document.forms['formModal']['productImg'].value
+      const productImg = document.querySelector('.display-img').src
+      const productDes = document.forms['formModal']['productDes'].value
+      const productId = document.forms['formModal']['id'].value
       
+      // handler(productName, productPrice, productImg, productDes)
       if(productId) return 
-      if(productName !== '' && productPrice !== '' && productImg !== ''&& productDes !== '') {
+      if(productName !== '' && productPrice !== '' && productImg !== '' && inputImg !== '' && productDes !== '') {
         handler(productName, productPrice, productImg, productDes)
       }
-      else alert('Please enter all fields')
+      else {
+        
+        return false
+      }
+      // alert('Please enter all fields')
 
 
       this._resetInput()
@@ -188,17 +226,22 @@ export default class View {
 
   bindEditproduct(handler) {
     this.formModal.addEventListener('submit', e => {
-      e.preventDefault()
+
       let productName = document.forms['formModal']['productName'].value
       let productPrice = document.forms['formModal']['productPrice'].value
       let productImg = document.querySelector('.display-img').src
       let productDes = document.forms['formModal']['productDes'].value
       let id = document.forms['formModal']['id'].value
       
-      if(this.saveProduct.value != '') {
+      if(this.saveProduct.value != '' && productName !== '' && productPrice !== '' && productDes !== '') {
         handler(id,productName, productPrice, productImg, productDes)
       }
-      else return false
+      // if(this.saveProduct.value != '') {
+      //   handler(id,productName, productPrice, productImg, productDes)
+      // }
+      else {
+        return false
+      }
       this._resetInput()
       this.closeForm()
     })
@@ -221,27 +264,44 @@ export default class View {
   }
 
   bindSelectedProduct(handler) {
-    this.productList.addEventListener('mouseenter', event => {
-      this.productItem = this.productList.querySelectorAll('.product-item')
-        this.productItem.forEach(item => {
-          item.addEventListener('click', e => {
-            item.classList.toggle('active')
-            const itemInfo =  item.querySelectorAll('p')
-            itemInfo.forEach(child => {
-              child.classList.toggle('child-active')
-            })
-            const id = item.id
-                handler(id)
-            // itemImg.classList.toggle('child-active')
-            // if( e.target.className === 'product-item active' ||
-            //     e.target.className === 'product-img child-active' ||
-            //     e.target.className === 'product-name child-active' ||
-            //     e.target.className === 'product-price child-active' ||
-            //     e.target.className === 'product-des child-active') {
-                  
-            //     }
-          })
-        })
+    this.productList.addEventListener('click', event => {
+      if (event.target.className.indexOf("product-item") != -1) {
+        const productItem = event.target
+        const id = productItem.id
+        productItem.classList.toggle('active')
+        handler(id)
+        console.log(id)
+      }
+      if (event.target.className.indexOf("img-item") != -1) {
+        const productItem = event.target.parentElement
+        productItem.classList.toggle('active')
+        const id = productItem.id
+        handler(id)
+      }
+      if (event.target.className.indexOf("product-img") != -1) {
+        const productItem = event.target.parentElement.parentElement
+        productItem.classList.toggle('active')
+        const id = productItem.id
+        handler(id)
+      }
+      if (event.target.className.indexOf("product-name") != -1) {
+        const productItem = event.target.parentElement.parentElement
+        productItem.classList.toggle('active')
+        const id = productItem.id
+        handler(id)
+      }
+      if (event.target.className.indexOf("product-price") != -1) {
+        const productItem = event.target.parentElement.parentElement
+        productItem.classList.toggle('active')
+        const id = productItem.id
+        handler(id)
+      }
+      if (event.target.className.indexOf("product-des") != -1) {
+        const productItem = event.target.parentElement.parentElement
+        productItem.classList.toggle('active')
+        const id = productItem.id
+        handler(id)
+      }
     })
   }
 

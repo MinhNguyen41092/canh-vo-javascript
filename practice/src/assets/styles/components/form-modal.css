@@ -69,6 +69,11 @@
   gap: 3rem;
 }
 
+.btn-save {
+  opacity: 0.3;
+  cursor: default;
+}
+ 
 .display-img {
   width: 10rem;
   height: 12rem;

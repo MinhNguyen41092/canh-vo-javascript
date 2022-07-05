@@ -8,7 +8,7 @@
     </div>
     <div class="form-group">
       <label for="product-price" class="form-label">Price</label>
-      <input type="number" id="product-price" class="form-input" placeholder="Product price" name = "productPrice">
+      <input type="number" id="product-price" class="form-input" placeholder="Product price" name = "productPrice" min="1">
       <span class="form-message"></span>
     </div>
     <div class="form-group">
@@ -24,8 +24,9 @@
       <span class="form-message"></span>
     </div>
     <div class="button-group">
-      <button type="submit" class="btn-primary" id="save-product" name="id">Save</button>
+      <button type="submit" class="btn-primary btn-save" id="save-product" name="id">Save</button>
       <button class="btn-warning" id="close-form">Cancel</button>
     </div>
+    <span class="form-message"></span>
   </form>
 </div>

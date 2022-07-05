@@ -19,7 +19,3 @@
 .btn-danger {
   background-color: var(--btn-danger-color);
 }
-
-.btn-primary:hover, .btn-warning:hover, .btn-danger:hover {
-  opacity: 0.8;
-}
