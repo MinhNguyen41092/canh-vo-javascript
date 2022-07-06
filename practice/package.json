@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^2.0.19",
     "parcel": "^2.6.2",
     "posthtml-doctype": "^1.1.1",
     "posthtml-include": "^1.7.4"

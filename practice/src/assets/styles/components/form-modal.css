@@ -30,6 +30,10 @@
   margin-bottom: 1.5rem;
 }
 
+.heading-message {
+  text-align: center;
+}
+
 .form-label {
   font-size: 1.6rem;
   margin: 0.8rem 0;
@@ -69,11 +73,6 @@
   gap: 3rem;
 }
 
-.btn-save {
-  opacity: 0.3;
-  cursor: default;
-}
- 
 .display-img {
   width: 10rem;
   height: 12rem;

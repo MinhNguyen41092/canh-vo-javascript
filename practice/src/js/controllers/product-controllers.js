@@ -38,7 +38,6 @@ export default class Controller {
   }
 
   handlerSelectedProduct = (id) => {
-    // this.model.selectedProduct(id)
     this.model.selectedProduct(id)
   }
 

@@ -5,7 +5,6 @@ export default class Model {
   }
 
   _commit(products) {
-    // this.onProductListChanged(products)
     localStorage.setItem('products', JSON.stringify(this.products))
   }
 
@@ -50,23 +49,23 @@ export default class Model {
 
   selectedProduct(id) {
     const check = this.listId.indexOf(id)
-    if (check === -1 ) {
-      this.listId.push(id)
-    }
-    else {
+    if (check !== -1 ) {
       this.listId.splice(check, 1)
     }
-    return(this.listId)
+    else {
+      this.listId.push(id)
+    }
   }
 
   deleteSelectedProduct() {
-    const listId = this.selectedProduct()
-    listId.forEach(id => {
+    if(this.listId.length == 0) return
+    this.listId.forEach(id => {
       const check = this.products.filter(obj => {
-        return obj.id.toString() === id
+        return obj.id == id
       })
       this.products = this.products.filter(item => item !== check[0])
     })
+    this.listId = []
     this._commit(this.products)
     return this.products
   }

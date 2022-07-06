@@ -4,6 +4,7 @@ export default class View {
     this.addBtn = this.getElement('#open-form')
     this.closeBtn = this.getElement('#close-form')
     this.modal = this.getElement('.modal')
+    this.editHeading = this.getElement('.form-heading')
     this.body = this.getElement('body')
     this.saveProduct = this.getElement('#save-product')
     this.formInput = this.formModal.querySelectorAll('.form-input')
@@ -27,9 +28,6 @@ export default class View {
     this.imageProduct.style.display = 'none'
     this.imageProduct.src =''
     this.getElement("#save-product").value = ''
-    this.saveProduct.style.opacity = 0.3
-    this.saveProduct.style.cursor = 'default'
-    this.saveProduct.disabled = false
   }
 
   openForm() {
@@ -39,7 +37,6 @@ export default class View {
   bindOpenform() {
     this.addBtn.addEventListener('click', e => {
       this.openForm()
-      this._resetInput()
     })
   }
 
@@ -88,44 +85,22 @@ export default class View {
     })
   }
 
-  checkInput() {
-    this.imageInput.value = ''
-    this.imageProduct.src = ''
-    this.input = this.formModal.querySelectorAll('input')
-    this.input.forEach(i => {
-      i.addEventListener('input', () => {
-        this.input.forEach(v => {
-          if(v.value === '' || this.imageInput.value === '' ) {
-            this.saveProduct.style.opacity = 0.3
-            this.saveProduct.style.cursor = 'default'
-            this.saveProduct.disabled = false
-          }
-          else {
-            this.saveProduct.style.opacity = 1
-            this.saveProduct.style.cursor = 'pointer'
-          }
-        })
-      })
-    })
-  }
-
   validator() {
     this.validateInput()
     this.displayImage()
   }
 
   renderProduct(products) {
-    // let content = ''
     const productList = this.getElement('.product-list')
     if(products.length == 0) {
       productList.innerHTML = 'There is no products in your store'
     }
     else {
       productList.innerHTML = ""
-    products.forEach(product => {
+      products.forEach(product => {
       const productItem = document.createElement('div')
       productItem.classList.add('product-item')
-      productItem.id=product.id
+      productItem.id = product.id
       const productAction = document.createElement('div')
       productAction.classList.add('product-action')
 
@@ -142,7 +117,7 @@ export default class View {
       iconDelete.classList.add('fas')
       iconDelete.classList.add('fa-times')
       iconDelete.classList.add('delete-product')
-      iconDelete.id=product.id
+      iconDelete.id = product.id
       btnDeleteProduct.append(iconDelete)
       productAction.append(btnDeleteProduct)
 
@@ -171,8 +146,8 @@ export default class View {
       productInfo.append(productDes)
       productItem.append(productInfo)
       productList.append(productItem)
-
-      -this._resetInput()
+      
+      // this.checkInput()
       this.handlerClickEdit(product)
     })
     }
@@ -182,22 +157,18 @@ export default class View {
     this.item = this.getElement(`.edit-product-${product.id}`)
     this.item.addEventListener('click', e => {
         this.openForm()
-        this.saveProduct.style.opacity = 1
-        this.saveProduct.style.cursor = 'pointer'
-        
+        this.editHeading.innerText = 'Edit Product'
         this.getElement("#product-name").value = product.name
         this.getElement("#product-price").value = product.price
         this.getElement(".display-img").src = product.img
         this.getElement(".display-img").style.display = 'block'
         this.getElement("#product-des").value = product.des
         this.getElement("#save-product").value = product.id
-        
         this.saveProduct.setAttribute('Save-product', product.id)
     })
   }
 
   bindAddproduct(handler) {
-    this.checkInput()
     this.formModal.addEventListener('submit', e => {
       e.preventDefault()
       const productName = document.forms['formModal']['productName'].value
@@ -207,17 +178,15 @@ export default class View {
       const productDes = document.forms['formModal']['productDes'].value
       const productId = document.forms['formModal']['id'].value
       
-      // handler(productName, productPrice, productImg, productDes)
       if(productId) return 
       if(productName !== '' && productPrice !== '' && productImg !== '' && inputImg !== '' && productDes !== '') {
         handler(productName, productPrice, productImg, productDes)
       }
       else {
-        
+        this.message = this.getElement('.heading-message')
+        this.message.innerHTML = 'Please fill in all fields'
         return false
       }
-      // alert('Please enter all fields')
-
 
       this._resetInput()
       this.closeForm()
@@ -227,11 +196,11 @@ export default class View {
   bindEditproduct(handler) {
     this.formModal.addEventListener('submit', e => {
 
-      let productName = document.forms['formModal']['productName'].value
-      let productPrice = document.forms['formModal']['productPrice'].value
-      let productImg = document.querySelector('.display-img').src
-      let productDes = document.forms['formModal']['productDes'].value
-      let id = document.forms['formModal']['id'].value
+      const productName = document.forms['formModal']['productName'].value
+      const productPrice = document.forms['formModal']['productPrice'].value
+      const productImg = document.querySelector('.display-img').src
+      const productDes = document.forms['formModal']['productDes'].value
+      const id = document.forms['formModal']['id'].value
       
       if(this.saveProduct.value != '' && productName !== '' && productPrice !== '' && productDes !== '') {
         handler(id,productName, productPrice, productImg, productDes)
@@ -270,7 +239,6 @@ export default class View {
         const id = productItem.id
         productItem.classList.toggle('active')
         handler(id)
-        console.log(id)
       }
       if (event.target.className.indexOf("img-item") != -1) {
         const productItem = event.target.parentElement
