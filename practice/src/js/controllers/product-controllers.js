@@ -33,7 +33,6 @@ export default class Controller {
 
   handleDeleteAllproduct = () => {
     const products = this.model.deleteAllProduct()
-    this.view.bindDeleteAllProduct(this.handleDeleteAllproduct)
     this.view.renderProduct(products)
   }
 

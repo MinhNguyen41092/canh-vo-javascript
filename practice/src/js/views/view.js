@@ -5,7 +5,6 @@ export default class View {
     this.closeBtn = this.getElement('#close-form')
     this.modal = this.getElement('.modal')
     this.editHeading = this.getElement('.form-heading')
-    this.body = this.getElement('body')
     this.saveProduct = this.getElement('#save-product')
     this.formInput = this.formModal.querySelectorAll('.form-input')
     this.imageInput = this.getElement('.img-input')
@@ -147,7 +146,6 @@ export default class View {
       productItem.append(productInfo)
       productList.append(productItem)
       
-      // this.checkInput()
       this.handlerClickEdit(product)
     })
     }
@@ -176,9 +174,7 @@ export default class View {
       const inputImg = document.forms['formModal']['productImg'].value
       const productImg = document.querySelector('.display-img').src
       const productDes = document.forms['formModal']['productDes'].value
-      const productId = document.forms['formModal']['id'].value
       
-      if(productId) return 
       if(productName !== '' && productPrice !== '' && productImg !== '' && inputImg !== '' && productDes !== '') {
         handler(productName, productPrice, productImg, productDes)
       }
