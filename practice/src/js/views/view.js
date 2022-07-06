@@ -205,9 +205,6 @@ export default class View {
       if(this.saveProduct.value != '' && productName !== '' && productPrice !== '' && productDes !== '') {
         handler(id,productName, productPrice, productImg, productDes)
       }
-      // if(this.saveProduct.value != '') {
-      //   handler(id,productName, productPrice, productImg, productDes)
-      // }
       else {
         return false
       }
