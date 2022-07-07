@@ -1,0 +1,21 @@
+.btn-primary, .btn-danger, .btn-warning {
+  padding: 1.2rem;
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.btn-primary {
+  background-color: var(--btn-primary-color);
+}
+
+.btn-warning {
+  background-color: var(--btn-warning-color);
+}
+
+.btn-danger {
+  background-color: var(--btn-danger-color);
+}

@@ -1,0 +1,12 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  background: var(--linear-background-color);
+}
+
+.container {
+  max-width: 110rem;
+  margin: 0 auto;
+}

@@ -1,11 +1,15 @@
 /* Abstracts */
-@import url(abstracts/variables.css);
+@import 'abstracts/variables.css';
 
 /* Base */
-@import url(base/reset.css);
+@import 'base/reset.css';
+@import 'base/global.css';
 
 /* Components */
-@import url(components/buttons.css);
+@import 'components/buttons.css';
+@import 'components/form-modal.css';
 
 /* Layout */
-@import url(layout/header.css);
+@import 'layout/header.css';
+@import 'layout/action-section.css';
+@import 'layout/product-section.css'

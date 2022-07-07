@@ -1,0 +1,10 @@
+.header {
+  padding: 5rem 0;
+}
+
+.header-logo {
+  font-size: 5rem;
+  color: var(--primary-color);
+  text-align: center;
+  letter-spacing: 0.2rem;
+}
