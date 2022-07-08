@@ -1,9 +1,9 @@
 /**
- * @class productModel
+ * @class ProductModel
  *
  * Manages the product data of the project.
  */
-export default class productModel {
+export default class ProductModel {
   constructor() {
     this.products = JSON.parse(localStorage.getItem('products')) || []
     this.listId = []
@@ -29,11 +29,11 @@ export default class productModel {
   }
 
   // Map through all products, and replace the text of the product with the specified id
-  editProduct(id, updatedName, updatePrice, updateImage, updateDes ) {
+  editProduct(id, updateName, updatePrice, updateImage, updateDes ) {
     this.products = this.products.map(product =>
       product.id == id ? { 
         id: product.id, 
-        name: updatedName, 
+        name: updateName, 
         price:updatePrice, 
         img: updateImage, 
         des: updateDes } : product
@@ -42,20 +42,20 @@ export default class productModel {
     return(this.products)
   }
 
-  // delete a product by product id
+  // Delete a product by product id
   deleteProduct(id) {
     this.products = this.products.filter(product => product.id != id)
     this._commit(this.products)
     return(this.products)
   }
-  // deltete all product
+  // Deltete all product
   deleteAllProduct() {
     this.products.length = 0
     this._commit(this.products)
     return this.products
   }
 
-  // get selected products by id and add to listId array
+  // Get selected products by id and add to listId array
   selectedProduct(id) {
     const check = this.listId.indexOf(id)
     if (check !== -1 ) {
@@ -66,7 +66,7 @@ export default class productModel {
     }
   }
 
-  // delete the selected products 
+  // Delete the selected products 
   deleteSelectedProduct() {
     if(this.listId.length == 0) return
     this.listId.forEach(id => {

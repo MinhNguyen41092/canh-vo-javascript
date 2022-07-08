@@ -1,9 +1,9 @@
 /**
- * @class productView
+ * @class ProductView
  *
  * Visual representation of the model.
  */
-export default class productView {
+export default class ProductView {
   constructor() {
     this.formModal = this.getElement('#formModal')
     this.addBtn = this.getElement('#open-form')
@@ -35,24 +35,24 @@ export default class productView {
     this.getElement("#save-product").value = ''
   }
 
-  // display form modal
+  // Display form modal
   openForm() {
     this.modal.style.display = 'block'
   }
 
-  // bind open form modal
+  // Bind open form modal
   bindOpenform() {
     this.addBtn.addEventListener('click', e => {
       this.openForm()
     })
   }
 
-  // hide form modal
+  // Hide form modal
   closeForm() {
     this.modal.style.display = 'none'
   }
 
-  // bind close form modal
+  // Bind close form modal
   bindCloseform() {
     this.closeBtn.addEventListener('click', e => {
       e.preventDefault()
@@ -64,7 +64,7 @@ export default class productView {
     })
   }
 
-  // validate input in form modal
+  // Validate input in form modal
   validateInput() {
 
     if(this.formInput) {
@@ -83,7 +83,7 @@ export default class productView {
     
   }
 
-  // display image when selecting image file 
+  // Display image when selecting image file 
   displayImage() {
     this.imageInput.addEventListener('change', (event) => {
       const reader = new FileReader()
@@ -96,13 +96,13 @@ export default class productView {
     })
   }
 
-  // validate form modal
+  // Validate form modal
   validator() {
     this.validateInput()
     this.displayImage()
   }
 
-  // display product
+  // Display product
   renderProduct(products) {
     const productList = this.getElement('.product-list')
 
@@ -111,7 +111,7 @@ export default class productView {
       productList.innerHTML = 'There is no products in your store'
     }
 
-    //Render product
+    // Render product
     else {
       productList.innerHTML = ""
       products.forEach(product => {
@@ -169,7 +169,7 @@ export default class productView {
     }
   }
 
-  // display input value when click edit product
+  // Display input value when click edit product
   handlerClickEdit(product) {
     this.item = this.getElement(`.edit-product-${product.id}`)
     this.item.addEventListener('click', e => {
@@ -185,52 +185,39 @@ export default class productView {
     })
   }
   
-  // get value from form modal when add new product
-  bindAddproduct(handler) {
-    this.formModal.addEventListener('submit', e => {
-      e.preventDefault()
-      const productName = document.forms['formModal']['productName'].value
-      const productPrice = document.forms['formModal']['productPrice'].value
-      const inputImg = document.forms['formModal']['productImg'].value
-      const productImg = document.querySelector('#show-image').src
-      const productDes = document.forms['formModal']['productDes'].value
-      
-      if(productName !== '' && productPrice !== '' && productImg !== '' && inputImg !== '' && productDes !== '') {
-        handler(productName, productPrice, productImg, productDes)
-      }
-      else {
-        this.message = this.getElement('#heading-message')
-        this.message.innerHTML = 'Please fill in all fields'
-        return false
-      }
-
-      this._resetInput()
-      this.closeForm()
-    })
-  }
-
-  // get value from form modal when edit product
-  bindEditproduct(handler) {
-    this.formModal.addEventListener('submit', e => {
-
+  // Get value input
+  getValueInput() {
       const productName = document.forms['formModal']['productName'].value
       const productPrice = document.forms['formModal']['productPrice'].value
       const productImg = document.querySelector('#show-image').src
       const productDes = document.forms['formModal']['productDes'].value
       const id = document.forms['formModal']['id'].value
-      
-      if(this.saveProduct.value != '' && productName !== '' && productPrice !== '' && productDes !== '') {
-        handler(id,productName, productPrice, productImg, productDes)
-      }
-      else {
-        return false
-      }
+      const saveProduct = this.saveProduct.value
+      return {productName, productPrice, productImg, productDes, id, saveProduct}
+  }
+
+  // Get value from form modal when add new product
+  bindAddproduct(handler) {
+    this.formModal.addEventListener('submit', e => {
+      e.preventDefault()
+      handler()
+      this._resetInput()
+      this.closeForm()
+    })
+    
+    
+  }
+
+  // Get value from form modal when edit product
+  bindEditproduct(handler) {
+    this.formModal.addEventListener('submit', e => { 
+      handler()
       this._resetInput()
       this.closeForm()
     })
   }
 
-  // get value from form modal when add new product
+  // Get value from form modal when add new product
   bindDeleteProduct(handler) {
     this.productList.addEventListener('click', event => {
       if (event.target.className.indexOf("delete-product") != -1) {
@@ -240,7 +227,7 @@ export default class productView {
     })
   }
   
-  // bind Delete all product
+  // Bind Delete all product
   bindDeleteAllProduct(handler) {
     const removeAll = this.getElement('#remove-all')
     removeAll.addEventListener('click', () => {
@@ -248,7 +235,7 @@ export default class productView {
     })
   }
 
-  // get Id when selected product
+  // Get Id when selected product
   bindSelectedProduct(handler) {
     this.productList.addEventListener('click', event => {
       if (event.target.className.indexOf("product-item") != -1) {
@@ -290,7 +277,7 @@ export default class productView {
     })
   }
 
-  //bind delete selected product
+  // Bind delete selected product
   bindDeleteSeclectedProduct(handler) {
     this.removeSelected.addEventListener('click', () => {
       handler()

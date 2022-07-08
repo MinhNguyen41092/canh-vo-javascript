@@ -1,10 +1,10 @@
 /**
- * @class productController
+ * @class ProductController
  *
  * Links the user input and the view output.
  *
  */
-export default class productController {
+export default class ProductController {
   constructor(model, view) {
     this.model = model
     this.view = view
@@ -14,7 +14,7 @@ export default class productController {
     this.view.bindOpenform()
     this.view.bindCloseform()
     this.view.validator()
-    this.view.bindAddproduct(this.handleAddproduct)
+    this.view.bindAddproduct(this.handleAddProduct)
     this.view.bindDeleteProduct(this.handleDeleteProduct)
     this.view.bindDeleteAllProduct(this.handleDeleteAllProduct)
     this.view.bindEditproduct(this.handleEditProduct)
@@ -22,14 +22,39 @@ export default class productController {
     this.view.bindDeleteSeclectedProduct(this.handlerDeleteSelectedProduct)
   }
 
-  handleAddProduct = (productName, productPrice, productImg, productDes) => {
-    const products = this.model.addProduct(productName, productPrice, productImg, productDes)
-    this.view.renderProduct(products)
+  handleAddProduct = () => {
+    const products = this.view.getValueInput()
+    const productName = products.productName
+    const productPrice = products.productPrice
+    const productImg = products.productImg
+    const productDes = products.productDes
+    if(productName !== '' && productPrice !== '' && productImg !== '' && productDes !== '') {
+      const products = this.model.addProduct(productName, productPrice, productImg, productDes)
+      this.view.renderProduct(products)
+    }
+    else {
+      this.message = this.getElement('#heading-message')
+      this.message.innerHTML = 'Please fill in all fields'
+      return false
+    }
   }
 
-  handleEditProduct = (id, updatedName, updatePrice, updateImage, updateDes ) => {
-    const products = this.model.editProduct(id, updatedName, updatePrice, updateImage, updateDes )
-    this.view.renderProduct(products)
+  handleEditProduct = () => {
+    const products = this.view.getValueInput()
+    const updateName = products.productName
+    const updatePrice = products.productPrice
+    const updateImage = products.productImg
+    const updateDes = products.productDes
+    const saveProduct = products.saveProduct
+    const id = products.id
+    
+    if(saveProduct != '' && updateName !== '' && updatePrice !== '' && updateDes !== '') {
+      this.model.editProduct(id, updateName, updatePrice, updatePrice, updateImage, updateDes )
+      this.view.renderProduct(products)
+    }
+    else {
+      return false
+    }
   }
 
   handleDeleteProduct = (id) => {
