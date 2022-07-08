@@ -48,6 +48,7 @@ export default class ProductModel {
     this._commit(this.products)
     return(this.products)
   }
+  
   // Deltete all product
   deleteAllProduct() {
     this.products.length = 0

@@ -28,12 +28,15 @@ export default class ProductController {
     const productPrice = products.productPrice
     const productImg = products.productImg
     const productDes = products.productDes
-    if(!!productName && productPrice && !!productImg && !!productDes) {
+    const id = products.id
+    if(!!productName && productPrice && !!productImg && !!productDes && id == '') {
       const products = this.model.addProduct(productName, productPrice, productImg, productDes)
       this.view.renderProduct(products)
+      this.view.closeForm()
+      this.view._resetInput()
     }
     else {
-      this.message = this.getElement('#heading-message')
+      this.message = document.querySelector('#heading-message')
       this.message.innerHTML = 'Please fill in all fields'
       return false
     }
@@ -48,9 +51,13 @@ export default class ProductController {
     const saveProduct = products.saveProduct
     const id = products.id
     
-    if(!!saveProduct && !!updateName && !!updatePrice && !!updateDes) {
-      this.model.editProduct(id, updateName, updatePrice, updatePrice, updateImage, updateDes )
+    if(!!saveProduct && !!updateName && !!updatePrice && !!updateDes && !!id) {
+      const products = this.model.editProduct(id, updateName, updatePrice, updateImage, updateDes)
+      this.message = document.querySelector('#heading-message')
+      this.message.innerHTML = ''
       this.view.renderProduct(products)
+      this.view.closeForm()
+      this.view._resetInput()
     }
     else {
       return false
