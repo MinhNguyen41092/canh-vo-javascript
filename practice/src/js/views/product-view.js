@@ -45,6 +45,7 @@ export default class ProductView {
     this.addBtn.addEventListener('click', e => {
       this.heading.innerText = 'Add New Product'
       this.openForm()
+      this._resetInput()
     })
   }
 
@@ -202,8 +203,6 @@ export default class ProductView {
     this.formModal.addEventListener('submit', e => {
       e.preventDefault()
       handler()
-      this._resetInput()
-      this.closeForm()
     })
     
     
@@ -213,8 +212,6 @@ export default class ProductView {
   bindEditproduct(handler) {
     this.formModal.addEventListener('submit', e => { 
       handler()
-      this._resetInput()
-      this.closeForm()
     })
   }
 
