@@ -9,7 +9,7 @@ export default class ProductView {
     this.addBtn = this.getElement('#open-form')
     this.closeBtn = this.getElement('#close-form')
     this.modal = this.getElement('#modal')
-    this.editHeading = this.getElement('#form-heading')
+    this.heading = this.getElement('#form-heading')
     this.saveProduct = this.getElement('#save-product')
     this.formInput = this.formModal.querySelectorAll('.form-input')
     this.imageInput = this.getElement('#product-image')
@@ -43,6 +43,7 @@ export default class ProductView {
   // Bind open form modal
   bindOpenform() {
     this.addBtn.addEventListener('click', e => {
+      this.heading.innerText = 'Add New Product'
       this.openForm()
     })
   }
@@ -174,7 +175,7 @@ export default class ProductView {
     this.item = this.getElement(`.edit-product-${product.id}`)
     this.item.addEventListener('click', e => {
         this.openForm()
-        this.editHeading.innerText = 'Edit Product'
+        this.heading.innerText = 'Edit Product'
         this.getElement("#product-name").value = product.name
         this.getElement("#product-price").value = product.price
         this.getElement("#show-image").src = product.img
