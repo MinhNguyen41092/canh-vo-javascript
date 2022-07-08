@@ -56,7 +56,7 @@ export default class ProductModel {
   }
 
   // Get selected products by id and add to listId array
-  selectedProduct(id) {
+  getSelectedProduct(id) {
     const check = this.listId.indexOf(id)
     if (check !== -1 ) {
       this.listId.splice(check, 1)

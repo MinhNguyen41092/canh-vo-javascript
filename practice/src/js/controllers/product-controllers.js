@@ -28,7 +28,7 @@ export default class ProductController {
     const productPrice = products.productPrice
     const productImg = products.productImg
     const productDes = products.productDes
-    if(productName !== '' && productPrice !== '' && productImg !== '' && productDes !== '') {
+    if(!!productName && productPrice && !!productImg && !!productDes) {
       const products = this.model.addProduct(productName, productPrice, productImg, productDes)
       this.view.renderProduct(products)
     }
@@ -48,7 +48,7 @@ export default class ProductController {
     const saveProduct = products.saveProduct
     const id = products.id
     
-    if(saveProduct != '' && updateName !== '' && updatePrice !== '' && updateDes !== '') {
+    if(!!saveProduct && !!updateName && !!updatePrice && !!updateDes) {
       this.model.editProduct(id, updateName, updatePrice, updatePrice, updateImage, updateDes )
       this.view.renderProduct(products)
     }
@@ -69,7 +69,7 @@ export default class ProductController {
   }
 
   handlerSelectedProduct = (id) => {
-    this.model.selectedProduct(id)
+    this.model.getSelectedProduct(id)
   }
 
   handlerDeleteSelectedProduct = () => {
