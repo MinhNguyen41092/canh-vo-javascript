@@ -36,12 +36,12 @@ function getFavoriteNumber(): number {
 const names = ["Alice", "Bob", "Eve"];
 // Contextual typing for function
 names.forEach(function (s) {
-  console.log(s.toUppercase());
+  // console.log(s.toUppercase());
   // Property 'toUppercase' does not exist on type 'string'. Did you mean 'toUpperCase'?
 });
 
 names.forEach((s) => {
-  console.log(s.toUppercase());
+  // console.log(s.toUppercase());
   // Property 'toUppercase' does not exist on type 'string'. Did you mean 'toUpperCase'?
 });
 
@@ -64,14 +64,14 @@ printName({ first: "Alice", last: "Alisson" });
 let Record: (Number| Boolean)
 
 Record = 1
-Record = "A" // error: Type 'string' is not assignable to type 'Number | Boolean'.
+// Record = "A" // error: Type 'string' is not assignable to type 'Number | Boolean'.
 Record = true
 
 let Result: string | string[]
 
 Result = "Done"
 Result = ["Done", "Failed", "Success"]
-Result = [1,2,3] // error: Type 'number' is not assignable to type 'string'
+// Result = [1,2,3] // error: Type 'number' is not assignable to type 'string'
 
 // Type Aliases
 type StudentName = string;
@@ -95,13 +95,13 @@ interface Teacher {
 let sum: any
 let total = <number>sum 
 total = 10
-total = "Total" //Type 'string' is not assignable to type 'number'.
+// total = "Total" //Type 'string' is not assignable to type 'number'.
 
 let grade: number | string
-let bobScore = grade as string
-let trumpScore = <boolean>grade // Conversion of type 'string | number' to type 'boolean' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
-bobScore = 10 // Type 'number' is not assignable to type 'string'
-bobScore = "A"
+// let bobScore = grade as string
+// let trumpScore = <boolean>grade // Conversion of type 'string | number' to type 'boolean' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+// bobScore = 10 // Type 'number' is not assignable to type 'string'
+// bobScore = "A"
 
 // Literal Types
 let count: 1;
@@ -109,7 +109,7 @@ let channelName: 'easy';
 let isActive: false;
 let student: null;
 
-let count: 1 = 2; //Type '2' is not assignable to type '1'
+// let count: 1 = 2; //Type '2' is not assignable to type '1'
 
 // Enums
 enum Status { 
@@ -140,7 +140,7 @@ class Students {
 	}
   }
    
-let student = new Students("UncleBob");
+// let student = new Students("UncleBob");
 
 // Class Heritage
 // Class Heritage: extends Clauses
@@ -175,13 +175,13 @@ class Sonar implements Pingable {
   }
 }
  
-class Ball implements Pingable {
-  // Class 'Ball' incorrectly implements interface 'Pingable'.
-  //  Property 'ping' is missing in type 'Ball' but required in type 'Pingable'.
-  pong() {
-    console.log("pong!");
-  }
-}
+// class Ball implements Pingable {
+//   // Class 'Ball' incorrectly implements interface 'Pingable'.
+//   //  Property 'ping' is missing in type 'Ball' but required in type 'Pingable'.
+//   pong() {
+//     console.log("pong!");
+//   }
+// }
 
 // Member Visibility
 // Member Visibility: public(allow access at any location)
@@ -211,7 +211,7 @@ class SpecialGreeter extends Greeter {
 }
 const g = new SpecialGreeter();
 g.greet(); // OK
-g.getName(); //Property 'getName' is protected and only accessible within class 'Greeter' and its subclasses.
+// g.getName(); //Property 'getName' is protected and only accessible within class 'Greeter' and its subclasses.
 
 // Member Visibility: private(only allow access inside that class)
 class Base {
@@ -219,12 +219,12 @@ class Base {
 }
 const b = new Base();
 // Can't access from outside subclasses
-console.log(b.x); // Property 'x' is private and only accessible within class 'Base'.
+// console.log(b.x); // Property 'x' is private and only accessible within class 'Base'.
 
 class Derived extends Base {
   showX() {
     // Can't access in subclasses
-    console.log(this.x);
+    // console.log(this.x);
     //Property 'x' is private and only accessible within class 'Base'.
   }
 }
@@ -316,9 +316,8 @@ class Point2 {
   x = 0;
   y = 0;
 }
- 
-// OK
-const p: Point1 = new Point2();
+
+const p: Point1 = new Point2(); // OK
 
 /* Variable Declaration */
 // var, let, const declarations
@@ -338,12 +337,10 @@ function f([first, second]: [number, number]) {
 }
 f([1,2]);
 
-// Use ... to get again of
 let [st, ...rest] = [1, 2, 3, 4];
 console.log(st); // 1
 console.log(rest); // [ 2, 3, 4 ]
 
-// Remove the following element
 let [a] = [1, 2, 3, 4];
 console.log(a); // 1
 
@@ -381,7 +378,7 @@ function u({ a, b = 0 } = { a: "" }): void {
 }
 u({ a: "yes" }); // ok, default b = 0
 u(); // ok, default to { a: "" }, which then defaults b = 0
-u({}); // error, 'a' is required if you supply an argument
+// u({}); // error, 'a' is required if you supply an argument
 
 // Spread
 // Expand from an existing array into another array.
@@ -397,5 +394,159 @@ let bothPlus = [0, ...arrayA, ...arrayB, 5]; // [0, 1, 2, 3, 4, 5]
 let defaults = { food: "spicy", price: "$$", ambiance: "noisy" };
 let search = { ...defaults, food: "rich" }; // { food: "rich", price: "$$", ambiance: "noisy" };
 
+/*Utility Types*/
+interface Todo {
+  title: string;
+  description: string;
+}
+// Partial<Type>
+function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
+  return { ...todo, ...fieldsToUpdate };
+}
+ 
+const todo1 = {
+  title: "organize desk",
+  description: "clear clutter",
+};
+ 
+const todo2 = updateTodo(todo1, {
+  description: "throw out trash",
+});
 
+//Required<Type>
+interface Props {
+  a?: number;
+  b?: string;
+}
 
+const obj2: Required<Props> = { a: 5, b: 'b'};
+
+//Readonly<Type>
+const todo: Readonly<Todo> = {
+  description: "des",
+  title: "Delete inactive users",
+}
+// todo.title = "hello" // Cannot assign to 'title' because it is a read-only property
+
+//Record<Keys, Type>
+interface CatInfo {
+  age: number
+  breed: string
+}
+ 
+type CatName = "miffy" | "boris" | "mordred"
+ 
+const cats: Record<CatName, CatInfo> = {
+  miffy: { age: 10, breed: "Persian" },
+  boris: { age: 5, breed: "Maine Coon" },
+  mordred: { age: 16, breed: "British Shorthair" },
+}
+
+//Pick<Type, Keys>
+type TodoPreview1= Pick<Todo, "title" | "description">
+
+const todoPreview: TodoPreview1 = {
+  title: 'sdfds',
+  description: 'des fsdf',
+}
+
+//Omit<Type, Keys>
+type TodoPreview2 = Omit<Todo, "completed">;
+const todoPreview2: TodoPreview2 = {
+  title: 'abc',
+  description: 'abc'
+}
+
+//Exclude<UnionType, ExcludedMembers>
+type T0 = Exclude<"a" | "b" | "c", "a">
+
+//Extract<Type, Union>
+type T1 = Extract<"a" | "b" | "c", "a" | "f">
+
+//NonNullable<Type>
+type T2 = NonNullable<string[] | null | undefined>
+
+//Parameters<Type>
+type T3 = Parameters<() => string>
+
+//ConstructorParameters<Type>
+type T4 = ConstructorParameters<ErrorConstructor>
+
+//ReturnType<Type>
+type T5 = ReturnType<() => string>
+
+//InstanceType<Type>
+class E {
+  x = 0;
+  y = 0;
+}
+ 
+type T6 = InstanceType<typeof E>
+
+//ThisParameterType<Type>
+function toHex(this: Number) {
+  return this.toString(16);
+}
+ 
+function numberToString1(n: ThisParameterType<typeof toHex>) {
+  return toHex.apply(n);
+}
+
+//OmitThisParameter<Type>
+const fiveToHex: OmitThisParameter<typeof toHex> = toHex.bind(5);
+console.log(fiveToHex());
+
+//ThisType<Type>
+type ObjectDescriptor<D, M> = {
+  data?: D
+  methods?: M & ThisType<D & M> // Type of 'this' in methods is D & M
+}
+
+/*Decorators*/
+// Class Decorators
+// function sealed(constructor: Function) {
+//   Object.seal(constructor);
+//   Object.seal(constructor.prototype);
+// }
+
+// @sealed
+// class GreeterClassDecorators {
+//   greeting: string;
+//   constructor(message: string) {
+//     this.greeting = message;
+//   }
+//   greetClassDecorators() {
+//     return "Hello, " + this.greeting;
+//   }
+// }
+
+// // Method Decorators
+// function enumerable(value: boolean) {
+//   return function (
+//       target: any,
+//       propertyKey: string,
+//       descriptor: PropertyDescriptor
+//   ) {
+//       descriptor.enumerable = value;
+//   }
+// }
+
+// class GreeterMethodDecorators {
+//   greeting: string;
+//   constructor(message: string) {
+//       this.greeting = message
+//   }
+
+//   @enumerable(false)
+//   greetMethodDecorators() {
+//       return "Hello, " + this.greeting
+//   }
+// }
+
+// Modules
+import * as Emp from "./examples-modules"
+
+console.log(Emp.age); // 20
+
+let empObj = new Emp.Employee("Bill Gates" , 2);
+empObj.displayEmployee(); //Output: Employee Code: 2, Employee Name: Bill Gates
