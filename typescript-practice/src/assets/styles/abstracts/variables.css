@@ -1,0 +1,8 @@
+:root {
+  --linear-background-color: linear-gradient(to right, #00853e, #50c878);
+  --primary-color: #ffffff;
+  --secondary-color: #242628;
+  --btn-primary-color: #337ab7;
+  --btn-warning-color: #f0ad4e;
+  --btn-danger-color: #d9534f;
+}
