@@ -12,10 +12,13 @@ export default class ProductView {
     this.heading = this.getElement('#form-heading')
     this.saveProduct = this.getElement('#save-product')
     this.formInput = this.formModal.querySelectorAll('.form-input')
-    this.imageInput = this.getElement('#product-image')
-    this.imageProduct = this.getElement('#show-image')
     this.productList = this.getElement(".product-list")
     this.removeSelected = this.getElement('#remove-selected')
+    this.imageInput = this.getElement('#product-image')
+    this.imageProduct = this.getElement('#show-image')
+    this.nameInput = this.getElement('#product-name')
+    this.priceInput = this.getElement('#product-price')
+    this.desInput = this.getElement('#product-des')
   }
   
   // Retrieve an element from the DOM
@@ -189,13 +192,13 @@ export default class ProductView {
   
   // Get value input
   getValueInput() {
-      const productName = document.forms['formModal']['productName'].value
-      const productPrice = document.forms['formModal']['productPrice'].value
-      const productImg = document.querySelector('#show-image').src
-      const productDes = document.forms['formModal']['productDes'].value
-      const id = document.forms['formModal']['id'].value
-      const saveProduct = this.saveProduct.value
-      return {productName, productPrice, productImg, productDes, id, saveProduct}
+      const productName = this.nameInput.value
+      const productPrice = this.priceInput.value
+      const productImg = this.imageProduct.src
+      const productDes = this.desInput.value
+      const id = this.saveProduct.value
+      console.log(productName, productPrice, productImg, productDes, id)
+      return {productName, productPrice, productImg, productDes, id}
   }
 
   // Get value from form modal when add new product
@@ -204,8 +207,6 @@ export default class ProductView {
       e.preventDefault()
       handler()
     })
-    
-    
   }
 
   // Get value from form modal when edit product
