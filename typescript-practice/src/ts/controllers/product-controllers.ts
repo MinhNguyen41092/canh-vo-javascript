@@ -1,3 +1,6 @@
+import { ProductModel } from '../models/product-model';
+import { ProductView } from '../views/product-view';
+import { ProductObj } from '../interface/product-interface';
 /**
  * @class ProductController
  *
@@ -5,80 +8,86 @@
  *
  */
 export default class ProductController {
-  constructor(model, view) {
-    this.model = model;
-    this.view = view;
-
+  constructor(private productModel: ProductModel, private productView: ProductView) {
     // Explicit this binding
-    this.view.renderProduct(this.model.products);
-    this.userview.bindOpenform();
-    this.view.bindCloseform();
-    this.view.validator();
-    this.view.bindAddproduct(this.handleAddProduct);
-    this.view.bindDeleteProduct(this.handleDeleteProduct);
-    this.view.bindDeleteAllProduct(this.handleDeleteAllProduct);
-    this.view.bindEditproduct(this.handleEditProduct);
-    this.view.bindSelectedProduct(this.handlerSelectedProduct);
-    this.view.bindDeleteSeclectedProduct(this.handlerDeleteSelectedProduct);
+    this.productView.renderProduct(this.productModel.products);
+    this.productView.bindOpenform();
+    this.productView.bindCloseform();
+    this.productView.validator();
+    this.productView.bindAddproduct(this.handleAddProduct);
+    this.productView.bindDeleteProduct(this.handleDeleteProduct);
+    this.productView.bindDeleteAllProduct(this.handleDeleteAllProduct);
+    this.productView.bindEditproduct(this.handleEditProduct);
+    this.productView.bindSelectedProduct(this.handlerSelectedProduct);
+    this.productView.bindDeleteSeclectedProduct(this.handlerDeleteSelectedProduct);
   }
 
   handleAddProduct = () => {
-    const products = this.view.getValueInput();
+    const products = this.productView.getValueInput();
     const productName = products.productName;
-    const productPrice = products.productPrice;
+    const productPrice = parseInt(products.productPrice);
     const productImg = products.productImg;
     const productDes = products.productDes;
     const id = products.id;
-    if (!!productName && productPrice && !!productImg && !!productDes && id == '') {
-      const products = this.model.addProduct(productName, productPrice, productImg, productDes);
-      this.view.renderProduct(products);
-      this.view.closeForm();
-      this.view._resetInput();
+    if (!!productName && !!productPrice && !!productImg && !!productDes && id == '') {
+      const products = this.productModel.addProduct(
+        productName,
+        productPrice,
+        productImg,
+        productDes
+      );
+      this.productView.renderProduct(products);
+      this.productView.closeForm();
+      this.productView._resetInput();
     } else {
-      this.message = document.querySelector('#heading-message');
-      this.message.innerHTML = 'Please fill in all fields';
+      const message = document.querySelector('#heading-message') as HTMLElement;
+      message.innerHTML = 'Please fill in all fields';
       return false;
     }
   };
 
   handleEditProduct = () => {
-    const products = this.view.getValueInput();
+    const products = this.productView.getValueInput();
     const updateName = products.productName;
-    const updatePrice = products.productPrice;
+    const updatePrice = parseInt(products.productPrice);
     const updateImage = products.productImg;
     const updateDes = products.productDes;
-    const saveProduct = products.saveProduct;
-    const id = products.id;
+    const id = parseInt(products.id);
 
-    if (!!saveProduct && !!updateName && !!updatePrice && !!updateDes && !!id) {
-      const products = this.model.editProduct(id, updateName, updatePrice, updateImage, updateDes);
-      this.message = document.querySelector('#heading-message');
-      this.message.innerHTML = '';
-      this.view.renderProduct(products);
-      this.view.closeForm();
-      this.view._resetInput();
+    if (!!updateName && !!updatePrice && !!updateDes && !!id) {
+      const products = this.productModel.editProduct(
+        id,
+        updateName,
+        updatePrice,
+        updateImage,
+        updateDes
+      );
+      const message = document.querySelector('#heading-message') as HTMLElement;
+      message.innerHTML = '';
+      this.productView.renderProduct(products);
+      this.productView.closeForm();
+      this.productView._resetInput();
     } else {
       return false;
     }
   };
 
-  handleDeleteProduct = (id) => {
-    const products = this.model.deleteProduct(id);
-    this.view.bindDeleteAllProduct(this.handleDeleteAllproduct);
-    this.view.renderProduct(products);
+  handleDeleteProduct = (id: number) => {
+    const products = this.productModel.deleteProduct(id);
+    this.productView.renderProduct(products);
   };
 
   handleDeleteAllProduct = () => {
-    const products = this.model.deleteAllProduct();
-    this.view.renderProduct(products);
+    const products = this.productModel.deleteAllProduct();
+    this.productView.renderProduct(products);
   };
 
-  handlerSelectedProduct = (id) => {
-    this.model.getSelectedProduct(id);
+  handlerSelectedProduct = (id: number) => {
+    this.productModel.getSelectedProduct(id);
   };
 
   handlerDeleteSelectedProduct = () => {
-    const products = this.model.deleteSelectedProduct();
-    this.view.renderProduct(products);
+    const products = this.productModel.deleteSelectedProduct();
+    if (products) this.productView.renderProduct(products);
   };
 }

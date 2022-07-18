@@ -1,16 +1,10 @@
+import { ProductObj } from '../interface/product-interface';
 /**
  * @class ProductModel
  *
  * Manages the product data of the project.
  */
-interface ProductObj {
-  id: number;
-  name: string;
-  price: number;
-  img: string;
-  des: string;
-}
-export default class ProductModel {
+export class ProductModel {
   products: ProductObj[];
   listId: Array<number>;
   constructor() {

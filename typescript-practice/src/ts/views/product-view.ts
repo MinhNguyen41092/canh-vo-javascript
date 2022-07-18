@@ -1,9 +1,10 @@
+import { ProductObj } from '../interface/product-interface';
 /**
  * @class ProductView
  *
  * Visual representation of the model.
  */
-export default class ProductView {
+export class ProductView {
   formModal: HTMLElement;
   modal: HTMLElement;
   heading: HTMLElement;
@@ -14,9 +15,12 @@ export default class ProductView {
   closeBtn: HTMLButtonElement;
   removeSelected: HTMLButtonElement;
 
-  formInput: NodeListOf<Element>;
+  formInput: NodeListOf<HTMLInputElement>;
+  nameInput: HTMLInputElement;
+  priceInput: HTMLInputElement;
   imageInput: HTMLInputElement;
   imageProduct: HTMLInputElement;
+  desInput: HTMLInputElement;
 
   constructor() {
     this.formModal = this.getElement('#formModal');
@@ -31,8 +35,11 @@ export default class ProductView {
     this.saveProduct = this.getButtonElement('#save-product');
     this.removeSelected = this.getButtonElement('#remove-selected');
 
+    this.nameInput = this.getInputElement('#product-name');
+    this.priceInput = this.getInputElement('#product-price');
     this.imageInput = this.getInputElement('#product-image');
     this.imageProduct = this.getInputElement('#show-image');
+    this.desInput = this.getInputElement('#product-des');
   }
 
   // Retrieve an element from the DOM
@@ -52,9 +59,9 @@ export default class ProductView {
 
   // Reset input to ''
   _resetInput() {
-    this.formInput.forEach((input) => {
-      input.value = '';
-    });
+    this.nameInput.value = '';
+    this.priceInput.value = '';
+    this.desInput.value = '';
     this.imageInput.value = '';
     this.imageProduct.style.display = 'none';
     this.imageProduct.src = '';
@@ -95,12 +102,15 @@ export default class ProductView {
   // Validate input in form modal
   validateInput() {
     if (this.formInput) {
-      this.formInput.forEach((inputElement) => {
+      this.formInput.forEach(function (inputElement) {
         if (inputElement) {
-          const errorElement = inputElement.parentElement.querySelector('.form-message');
+          const formGroup = inputElement.parentElement as HTMLElement;
+          const errorElement = formGroup.querySelector('.form-message') as HTMLElement;
+
           inputElement.onblur = () => {
             if (inputElement.value.trim() === '') errorElement.innerText = 'This field is required';
           };
+
           inputElement.oninput = () => {
             errorElement.innerText = '';
           };
@@ -114,11 +124,13 @@ export default class ProductView {
     this.imageInput.addEventListener('change', (event) => {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
-        const displayImg = document.querySelector('#show-image');
-        displayImg.setAttribute('src', reader.result);
+        const result = reader.result as string;
+        const displayImg = this.getElement('#show-image');
+        displayImg.setAttribute('src', result);
         displayImg.style.display = 'block';
       });
-      reader.readAsDataURL(this.imageInput.files[0]);
+      const listFile = this.imageInput.files;
+      if (listFile != null) reader.readAsDataURL(listFile[0]);
     });
   }
 
@@ -129,7 +141,7 @@ export default class ProductView {
   }
 
   // Display product
-  renderProduct(products) {
+  renderProduct(products: ProductObj[]) {
     const productList = this.getElement('.product-list');
 
     // Display text when there are no products
@@ -141,9 +153,10 @@ export default class ProductView {
     else {
       productList.innerHTML = '';
       products.forEach((product) => {
+        const id = product.id.toString();
         const productItem = document.createElement('div');
         productItem.classList.add('product-item');
-        productItem.id = product.id;
+        productItem.id = id;
         const productAction = document.createElement('div');
         productAction.classList.add('product-action');
 
@@ -151,7 +164,7 @@ export default class ProductView {
         const iconEdit = document.createElement('li');
         iconEdit.classList.add('fas');
         iconEdit.classList.add('fa-edit');
-        iconEdit.classList.add(`edit-product-${product.id}`);
+        iconEdit.classList.add(`edit-product-${id}`);
         btnEditProduct.append(iconEdit);
         productAction.append(btnEditProduct);
 
@@ -160,7 +173,7 @@ export default class ProductView {
         iconDelete.classList.add('fas');
         iconDelete.classList.add('fa-times');
         iconDelete.classList.add('delete-product');
-        iconDelete.id = product.id;
+        iconDelete.id = id;
         btnDeleteProduct.append(iconDelete);
         productAction.append(btnDeleteProduct);
 
@@ -196,34 +209,34 @@ export default class ProductView {
   }
 
   // Display input value when click edit product
-  handlerClickEdit(product) {
-    this.item = this.getElement(`.edit-product-${product.id}`);
-    this.item.addEventListener('click', (e) => {
+  handlerClickEdit(product: ProductObj) {
+    const item = this.getElement(`.edit-product-${product.id}`);
+    item.addEventListener('click', () => {
       this.openForm();
       this.heading.innerText = 'Edit Product';
-      this.getElement('#product-name').value = product.name;
-      this.getElement('#product-price').value = product.price;
-      this.getElement('#show-image').src = product.img;
-      this.getElement('#show-image').style.display = 'block';
-      this.getElement('#product-des').value = product.des;
-      this.getElement('#save-product').value = product.id;
-      this.saveProduct.setAttribute('Save-product', product.id);
+      this.getInputElement('#product-name').value = product.name;
+      this.getInputElement('#product-price').value = product.price.toString();
+      this.getInputElement('#show-image').src = product.img;
+      this.getInputElement('#show-image').style.display = 'block';
+      this.getInputElement('#product-des').value = product.des;
+      this.getInputElement('#save-product').value = product.id.toString();
+      this.saveProduct.setAttribute('Save-product', product.id.toString());
     });
   }
 
   // Get value input
   getValueInput() {
-    const productName = document.forms['formModal']['productName'].value;
-    const productPrice = document.forms['formModal']['productPrice'].value;
-    const productImg = document.querySelector('#show-image').src;
-    const productDes = document.forms['formModal']['productDes'].value;
-    const id = document.forms['formModal']['id'].value;
+    const productName = this.nameInput.value;
+    const productPrice = this.priceInput.value;
+    const productImg = this.imageProduct.src;
+    const productDes = this.desInput.value;
+    const id = this.saveProduct.value;
     const saveProduct = this.saveProduct.value;
     return { productName, productPrice, productImg, productDes, id, saveProduct };
   }
 
   // Get value from form modal when add new product
-  bindAddproduct(handler) {
+  bindAddproduct(handler: Function) {
     this.formModal.addEventListener('submit', (e) => {
       e.preventDefault();
       handler();
@@ -231,24 +244,24 @@ export default class ProductView {
   }
 
   // Get value from form modal when edit product
-  bindEditproduct(handler) {
+  bindEditproduct(handler: Function) {
     this.formModal.addEventListener('submit', (e) => {
       handler();
     });
   }
 
   // Get value from form modal when add new product
-  bindDeleteProduct(handler) {
+  bindDeleteProduct(handler: Function) {
     this.productList.addEventListener('click', (event) => {
-      if (event.target.className.indexOf('delete-product') != -1) {
-        const id = parseInt(event.target.id);
+      if ((event.target as any).className.indexOf('delete-product') != -1) {
+        const id = parseInt((event.target as any).id);
         handler(id);
       }
     });
   }
 
   // Bind Delete all product
-  bindDeleteAllProduct(handler) {
+  bindDeleteAllProduct(handler: Function) {
     const removeAll = this.getElement('#remove-all');
     removeAll.addEventListener('click', () => {
       handler();
@@ -256,40 +269,40 @@ export default class ProductView {
   }
 
   // Get Id when selected product
-  bindSelectedProduct(handler) {
+  bindSelectedProduct(handler: Function) {
     this.productList.addEventListener('click', (event) => {
-      if (event.target.className.indexOf('product-item') != -1) {
-        const productItem = event.target;
+      if ((event.target as any).className.indexOf('product-item') != -1) {
+        const productItem = event.target as HTMLElement;
         const id = productItem.id;
         productItem.classList.toggle('active');
         handler(id);
       }
-      if (event.target.className.indexOf('img-item') != -1) {
-        const productItem = event.target.parentElement;
+      if ((event.target as any).className.indexOf('img-item') != -1) {
+        const productItem = (event.target as any).parentElement;
         productItem.classList.toggle('active');
         const id = productItem.id;
         handler(id);
       }
-      if (event.target.className.indexOf('product-img') != -1) {
-        const productItem = event.target.parentElement.parentElement;
+      if ((event.target as any).className.indexOf('product-img') != -1) {
+        const productItem = (event.target as any).parentElement.parentElement;
         productItem.classList.toggle('active');
         const id = productItem.id;
         handler(id);
       }
-      if (event.target.className.indexOf('product-name') != -1) {
-        const productItem = event.target.parentElement.parentElement;
+      if ((event.target as any).className.indexOf('product-name') != -1) {
+        const productItem = (event.target as any).parentElement.parentElement;
         productItem.classList.toggle('active');
         const id = productItem.id;
         handler(id);
       }
-      if (event.target.className.indexOf('product-price') != -1) {
-        const productItem = event.target.parentElement.parentElement;
+      if ((event.target as any).className.indexOf('product-price') != -1) {
+        const productItem = (event.target as any).parentElement.parentElement;
         productItem.classList.toggle('active');
         const id = productItem.id;
         handler(id);
       }
-      if (event.target.className.indexOf('product-des') != -1) {
-        const productItem = event.target.parentElement.parentElement;
+      if ((event.target as any).className.indexOf('product-des') != -1) {
+        const productItem = (event.target as any).parentElement.parentElement;
         productItem.classList.toggle('active');
         const id = productItem.id;
         handler(id);
@@ -298,7 +311,7 @@ export default class ProductView {
   }
 
   // Bind delete selected product
-  bindDeleteSeclectedProduct(handler) {
+  bindDeleteSeclectedProduct(handler: Function) {
     this.removeSelected.addEventListener('click', () => {
       handler();
     });
