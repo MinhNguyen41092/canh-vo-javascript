@@ -141,69 +141,72 @@ export class ProductView implements IProductView {
     this.displayImage();
   }
 
+  // Create nodes
+  createNodes(product: IProduct) {
+    const id = product.id.toString();
+
+    const productItem = document.createElement('div');
+    productItem.classList.add('product-item');
+    productItem.id = id
+
+    const productAction = document.createElement('div');
+    productAction.classList.add('product-action')
+    const btnEditProduct = document.createElement('button');
+    const iconEdit = document.createElement('li');
+    iconEdit.classList.add('fas');
+    iconEdit.classList.add('fa-edit');
+    iconEdit.classList.add(`edit-product-${id}`);
+    btnEditProduct.append(iconEdit);
+    productAction.append(btnEditProduct)
+    const btnDeleteProduct = document.createElement('button');
+    const iconDelete = document.createElement('li');
+    iconDelete.classList.add('fas');
+    iconDelete.classList.add('fa-times');
+    iconDelete.classList.add('delete-product');
+    iconDelete.id = id;
+    btnDeleteProduct.append(iconDelete);
+    productAction.append(btnDeleteProduct);
+    productItem.append(productAction);
+
+    const imgItem = document.createElement('div');
+    imgItem.classList.add('img-item');
+    const productImg = document.createElement('img');
+    productImg.src = product.img;
+    productImg.classList.add('product-img');
+    imgItem.append(productImg);
+    productItem.append(imgItem);
+    const productInfo = document.createElement('div');
+    productInfo.classList.add('product-info');
+    const productName = document.createElement('p');
+    productName.classList.add('product-name');
+    productName.textContent = product.name;
+    productInfo.append(productName);
+    const productPrice = document.createElement('p');
+    productPrice.classList.add('product-price');
+    productPrice.textContent = `${product.price}$`;
+    productInfo.append(productPrice);
+    const productDes = document.createElement('p');
+    productDes.classList.add('product-des');
+    productDes.textContent = product.des;
+    productInfo.append(productDes);
+    productItem.append(productInfo);
+
+    this.productList.append(productItem);
+
+  }
+
   // Display product
   renderProduct(products: IProduct[]) {
-    const productList = this.getElement('.product-list');
 
     // Display text when there are no products
     if (products.length == 0) {
-      productList.innerHTML = 'There is no products in your store';
+      this.productList.innerHTML = 'There is no products in your store';
     }
-
     // Render product
     else {
-      productList.innerHTML = '';
+      this.productList.innerHTML = '';
       products.forEach((product) => {
-        const id = product.id.toString();
-        const productItem = document.createElement('div');
-        productItem.classList.add('product-item');
-        productItem.id = id;
-        const productAction = document.createElement('div');
-        productAction.classList.add('product-action');
-
-        const btnEditProduct = document.createElement('button');
-        const iconEdit = document.createElement('li');
-        iconEdit.classList.add('fas');
-        iconEdit.classList.add('fa-edit');
-        iconEdit.classList.add(`edit-product-${id}`);
-        btnEditProduct.append(iconEdit);
-        productAction.append(btnEditProduct);
-
-        const btnDeleteProduct = document.createElement('button');
-        const iconDelete = document.createElement('li');
-        iconDelete.classList.add('fas');
-        iconDelete.classList.add('fa-times');
-        iconDelete.classList.add('delete-product');
-        iconDelete.id = id;
-        btnDeleteProduct.append(iconDelete);
-        productAction.append(btnDeleteProduct);
-
-        productItem.append(productAction);
-
-        const imgItem = document.createElement('div');
-        imgItem.classList.add('img-item');
-        const productImg = document.createElement('img');
-        productImg.src = product.img;
-        productImg.classList.add('product-img');
-        imgItem.append(productImg);
-        productItem.append(imgItem);
-        const productInfo = document.createElement('div');
-        productInfo.classList.add('product-info');
-        const productName = document.createElement('p');
-        productName.classList.add('product-name');
-        productName.textContent = product.name;
-        productInfo.append(productName);
-        const productPrice = document.createElement('p');
-        productPrice.classList.add('product-price');
-        productPrice.textContent = `${product.price}$`;
-        productInfo.append(productPrice);
-        const productDes = document.createElement('p');
-        productDes.classList.add('product-des');
-        productDes.textContent = product.des;
-        productInfo.append(productDes);
-        productItem.append(productInfo);
-        productList.append(productItem);
-
+        this.createNodes(product)
         this.handlerClickEdit(product);
       });
     }

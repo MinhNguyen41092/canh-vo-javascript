@@ -12,6 +12,7 @@ export interface IProductView {
   validateInput(): void
   displayImage(): void 
   validator(): void
+  createNodes(product: IProduct): void
   renderProduct(products: IProduct[]): void
   handlerClickEdit(product: IProduct): void
   getValueInput(): object
