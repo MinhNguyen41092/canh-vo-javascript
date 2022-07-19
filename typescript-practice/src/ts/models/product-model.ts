@@ -1,29 +1,31 @@
-import { ProductObj } from '../interface/product-interface';
+import { IProduct } from '../interfaces/product-interface';
+import { INewProduct } from '../interfaces/product-interface';
+import { IProductModel } from '../interfaces/model-interface';
 /**
  * @class ProductModel
  *
  * Manages the product data of the project.
  */
-export class ProductModel {
-  products: ProductObj[];
+export class ProductModel implements IProductModel {
+  products: IProduct[];
   listId: Array<number>;
   constructor() {
     this.products = JSON.parse(localStorage.getItem('products')!) || [];
     this.listId = [];
   }
 
-  _commit(products: ProductObj[]) {
+  _commit(products: IProduct[]) {
     localStorage.setItem('products', JSON.stringify(this.products));
   }
 
   // Add new product to products array
-  addProduct(productName: string, productPrice: number, productImg: string, productDes: string) {
-    const product: ProductObj = {
+  addProduct(newProduct: INewProduct) {
+    const product: IProduct = {
       id: this.products.length > 0 ? this.products[this.products.length - 1].id + 1 : 1,
-      name: productName,
-      price: productPrice,
-      img: productImg,
-      des: productDes,
+      name: newProduct.name,
+      price: newProduct.price,
+      img: newProduct.img,
+      des: newProduct.des,
     };
 
     this.products.push(product);
@@ -32,21 +34,15 @@ export class ProductModel {
   }
 
   // Map through all products, and replace the text of the product with the specified id
-  editProduct(
-    id: number,
-    updateName: string,
-    updatePrice: number,
-    updateImage: string,
-    updateDes: string
-  ) {
+  editProduct(updateProduct: IProduct) {
     this.products = this.products.map((product) =>
-      product.id == id
+      product.id == updateProduct.id
         ? {
             id: product.id,
-            name: updateName,
-            price: updatePrice,
-            img: updateImage,
-            des: updateDes,
+            name: updateProduct.name,
+            price: updateProduct.price,
+            img: updateProduct.img,
+            des: updateProduct.des,
           }
         : product
     );

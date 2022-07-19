@@ -1,10 +1,11 @@
-import { ProductObj } from '../interface/product-interface';
+import { IProduct } from '../interfaces/product-interface';
+import { IProductView } from '../interfaces/view-interface';
 /**
  * @class ProductView
  *
  * Visual representation of the model.
  */
-export class ProductView {
+export class ProductView implements IProductView {
   formModal: HTMLElement;
   modal: HTMLElement;
   heading: HTMLElement;
@@ -69,12 +70,12 @@ export class ProductView {
   }
 
   // Display form modal
-  openForm(): void {
+  openForm() {
     this.modal.style.display = 'block';
   }
 
   // Bind open form modal
-  bindOpenform(): void {
+  bindOpenform() {
     this.addBtn.addEventListener('click', (e) => {
       this.heading.innerText = 'Add New Product';
       this.openForm();
@@ -141,7 +142,7 @@ export class ProductView {
   }
 
   // Display product
-  renderProduct(products: ProductObj[]) {
+  renderProduct(products: IProduct[]) {
     const productList = this.getElement('.product-list');
 
     // Display text when there are no products
@@ -209,7 +210,7 @@ export class ProductView {
   }
 
   // Display input value when click edit product
-  handlerClickEdit(product: ProductObj) {
+  handlerClickEdit(product: IProduct) {
     const item = this.getElement(`.edit-product-${product.id}`);
     item.addEventListener('click', () => {
       this.openForm();

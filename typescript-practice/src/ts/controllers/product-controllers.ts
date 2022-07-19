@@ -1,12 +1,13 @@
 import { ProductModel } from '../models/product-model';
 import { ProductView } from '../views/product-view';
+import { IProductController } from '../interfaces/controller-interface';
 /**
  * @class ProductController
  *
  * Links the user input and the view output.
  *
  */
-export class ProductController {
+export class ProductController implements IProductController {
   constructor(public productModel: ProductModel, public productView: ProductView) {
     // Explicit this binding
     this.productView.renderProduct(this.productModel.products);
@@ -29,12 +30,12 @@ export class ProductController {
     const productDes = products.productDes;
     const id = products.id;
     if (!!productName && !!productPrice && !!productImg && !!productDes && id == '') {
-      const products = this.productModel.addProduct(
-        productName,
-        productPrice,
-        productImg,
-        productDes
-      );
+      const products = this.productModel.addProduct({
+        name: productName,
+        price: productPrice,
+        img: productImg,
+        des: productDes
+        });
       this.productView.renderProduct(products);
       this.productView.closeForm();
       this.productView._resetInput();
@@ -54,13 +55,13 @@ export class ProductController {
     const id = parseInt(products.id);
 
     if (!!updateName && !!updatePrice && !!updateDes && !!id) {
-      const products = this.productModel.editProduct(
-        id,
-        updateName,
-        updatePrice,
-        updateImage,
-        updateDes
-      );
+      const products = this.productModel.editProduct({
+        id: id,
+        name: updateName,
+        price: updatePrice,
+        img: updateImage,
+        des: updateDes
+      });
       const message = document.querySelector('#heading-message') as HTMLElement;
       message.innerHTML = '';
       this.productView.renderProduct(products);
