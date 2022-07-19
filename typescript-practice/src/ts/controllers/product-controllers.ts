@@ -1,14 +1,13 @@
 import { ProductModel } from '../models/product-model';
 import { ProductView } from '../views/product-view';
-import { ProductObj } from '../interface/product-interface';
 /**
  * @class ProductController
  *
  * Links the user input and the view output.
  *
  */
-export default class ProductController {
-  constructor(private productModel: ProductModel, private productView: ProductView) {
+export class ProductController {
+  constructor(public productModel: ProductModel, public productView: ProductView) {
     // Explicit this binding
     this.productView.renderProduct(this.productModel.products);
     this.productView.bindOpenform();

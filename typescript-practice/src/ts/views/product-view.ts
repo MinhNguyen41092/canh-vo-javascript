@@ -69,12 +69,12 @@ export class ProductView {
   }
 
   // Display form modal
-  openForm() {
+  openForm(): void {
     this.modal.style.display = 'block';
   }
 
   // Bind open form modal
-  bindOpenform() {
+  bindOpenform(): void {
     this.addBtn.addEventListener('click', (e) => {
       this.heading.innerText = 'Add New Product';
       this.openForm();

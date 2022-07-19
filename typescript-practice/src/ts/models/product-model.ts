@@ -8,7 +8,7 @@ export class ProductModel {
   products: ProductObj[];
   listId: Array<number>;
   constructor() {
-    this.products = JSON.parse(localStorage.getItem('products') || '') || [];
+    this.products = JSON.parse(localStorage.getItem('products')!) || [];
     this.listId = [];
   }
 
