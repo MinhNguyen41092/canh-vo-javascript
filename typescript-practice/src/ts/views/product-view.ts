@@ -140,13 +140,24 @@ export class ProductView implements IProductView {
     this.validateInput();
     this.displayImage();
   }
-
+  
+  /*
+ * Returns element after adding class and id.
+ *
+ * @param {string} element Element want to create.
+ * @param {Array<string>} classes List classname want to create in element.
+ * @param {string(optional)} id Id want to create in element.
+ * @return {HTMLElement} element Element after adding class and id.
+ */
   createElement(element: string, classes?: Array<string>, id?: string) {
     const e = document.createElement(element);
+
     if(id) e.id = id
+
     if(classes) {
       classes.forEach(c => e.classList.add(c))
     }
+
     return e
   }
 
@@ -168,7 +179,7 @@ export class ProductView implements IProductView {
     productAction.append(btnDeleteProduct);
     productItem.append(productAction);
 
-    const imgItem = this.createElement('article ', ['img-item'])
+    const imgItem = this.createElement('article', ['img-item'])
     
     const productImg = this.createElement('img', ['product-img']) as HTMLImageElement
     productImg.src = product.img
@@ -270,46 +281,26 @@ export class ProductView implements IProductView {
     });
   }
 
+  // Get Id for get id for newly added product when selected
+  selectProduct(selector: string, handler: Function ) {
+    const e = document.getElementById(selector)
+    e?.addEventListener('click', () => {
+      e.classList.toggle('active')
+      const id = e.id
+      handler(id)
+    })
+  }
+
   // Get Id when selected product
   bindSelectedProduct(handler: Function) {
-    this.productList.addEventListener('click', (event) => {
-      if ((event.target as any).className.indexOf('product-item') != -1) {
-        const productItem = event.target as HTMLElement;
-        const id = productItem.id;
-        productItem.classList.toggle('active');
-        handler(id);
-      }
-      if ((event.target as any).className.indexOf('img-item') != -1) {
-        const productItem = (event.target as any).parentElement;
-        productItem.classList.toggle('active');
-        const id = productItem.id;
-        handler(id);
-      }
-      if ((event.target as any).className.indexOf('product-img') != -1) {
-        const productItem = (event.target as any).parentElement.parentElement;
-        productItem.classList.toggle('active');
-        const id = productItem.id;
-        handler(id);
-      }
-      if ((event.target as any).className.indexOf('product-name') != -1) {
-        const productItem = (event.target as any).parentElement.parentElement;
-        productItem.classList.toggle('active');
-        const id = productItem.id;
-        handler(id);
-      }
-      if ((event.target as any).className.indexOf('product-price') != -1) {
-        const productItem = (event.target as any).parentElement.parentElement;
-        productItem.classList.toggle('active');
-        const id = productItem.id;
-        handler(id);
-      }
-      if ((event.target as any).className.indexOf('product-des') != -1) {
-        const productItem = (event.target as any).parentElement.parentElement;
-        productItem.classList.toggle('active');
-        const id = productItem.id;
-        handler(id);
-      }
-    });
+    const productItem = document.querySelectorAll('.product-item')
+    productItem.forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('active')
+        const id = item.id
+        handler(id)
+      })
+    })
   }
 
   // Bind delete selected product

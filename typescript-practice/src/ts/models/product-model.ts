@@ -30,7 +30,7 @@ export class ProductModel implements IProductModel {
 
     this.products.push(product);
     this._commit(this.products);
-    return this.products;
+    return product;
   }
 
   // Map through all products, and replace the text of the product with the specified id

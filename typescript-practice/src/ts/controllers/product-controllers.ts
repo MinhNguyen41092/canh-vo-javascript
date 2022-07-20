@@ -29,14 +29,17 @@ export class ProductController implements IProductController {
     const productImg = products.productImg;
     const productDes = products.productDes;
     const id = products.id;
+    
     if (!!productName && !!productPrice && !!productImg && !!productDes && id == '') {
-      const products = this.productModel.addProduct({
+      const product = this.productModel.addProduct({
         name: productName,
         price: productPrice,
         img: productImg,
         des: productDes
         });
-      this.productView.renderProduct(products);
+      this.productView.createItem(product);
+      this.productView.handlerClickEdit(product)
+      this.productView.selectProduct(`${product.id}`, this.handlerSelectedProduct)
       this.productView.closeForm();
       this.productView._resetInput();
     } else {

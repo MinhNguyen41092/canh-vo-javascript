@@ -5,7 +5,7 @@ export interface IProductModel {
   
   products: IProduct[]
 
-  addProduct(newProduct: INewProduct): Array<IProduct>
+  addProduct(newProduct: INewProduct): IProduct
   editProduct(updateProduct: IProduct): IProduct[]
   deleteProduct(id: number): IProduct[]
   deleteAllProduct(id: number): IProduct[]
