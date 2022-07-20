@@ -1,0 +1,33 @@
+<div class="modal" id="modal">
+  <form action="" class="form-modal" name="formModal" id="formModal">
+    <h3 class="form-heading" id="form-heading">Add New Product</h3>
+    <span class="form-message heading-message" id="heading-message"></span>
+    <div class="form-group">
+      <label for="product-name" class="form-label">Name</label>
+      <input type="text" id="product-name" class="form-input" placeholder="Product name" name="productName">
+      <span class="form-message"></span>
+    </div>
+    <div class="form-group">
+      <label for="product-price" class="form-label">Price</label>
+      <input type="number" id="product-price" class="form-input" placeholder="Product price" name = "productPrice" min="1">
+      <span class="form-message"></span>
+    </div>
+    <div class="form-group">
+      <label for="product-image" class="form-label">Choose product image
+        <i class="fas fa-image"></i>
+      </label>
+      <input type="file" id="product-image" class="img-input" accept="image/*" name = "productImg">
+      <img src="#" alt="Product image" class="display-img" id="show-image">
+    </div>
+    <div class="form-group">
+      <label for="product-des" class="form-label">Description</label>
+      <input type="text" id="product-des" class="form-input" placeholder="Product description" name = "productDes">
+      <span class="form-message"></span>
+    </div>
+    <div class="button-group">
+      <button type="submit" class="btn-primary btn-save" id="save-product" name="id">Save</button>
+      <button class="btn-warning" id="close-form">Cancel</button>
+    </div>
+    <span class="form-message"></span>
+  </form>
+</div>

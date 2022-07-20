@@ -29,7 +29,7 @@ export default class ProductController {
     const productImg = products.productImg
     const productDes = products.productDes
     const id = products.id
-    if(!!productName && productPrice && !!productImg && !!productDes && id == '') {
+    if(!!productName && !!productPrice && !!productImg && !!productDes && id == '') {
       const products = this.model.addProduct(productName, productPrice, productImg, productDes)
       this.view.renderProduct(products)
       this.view.closeForm()
@@ -48,10 +48,9 @@ export default class ProductController {
     const updatePrice = products.productPrice
     const updateImage = products.productImg
     const updateDes = products.productDes
-    const saveProduct = products.saveProduct
     const id = products.id
     
-    if(!!saveProduct && !!updateName && !!updatePrice && !!updateDes && !!id) {
+    if(!!updateName && !!updatePrice && !!updateDes && !!id) {
       const products = this.model.editProduct(id, updateName, updatePrice, updateImage, updateDes)
       this.message = document.querySelector('#heading-message')
       this.message.innerHTML = ''
