@@ -151,7 +151,7 @@ export class ProductView implements IProductView {
   }
 
   // Create nodes
-  createNodes(product: IProduct) {
+  createItem(product: IProduct) {
     const id = product.id.toString();
 
     const productItem = this.createElement('div', ['product-item'], id)
@@ -168,7 +168,7 @@ export class ProductView implements IProductView {
     productAction.append(btnDeleteProduct);
     productItem.append(productAction);
 
-    const imgItem = this.createElement('div', ['img-item'])
+    const imgItem = this.createElement('article ', ['img-item'])
     
     const productImg = this.createElement('img', ['product-img']) as HTMLImageElement
     productImg.src = product.img
@@ -204,7 +204,7 @@ export class ProductView implements IProductView {
     else {
       this.productList.innerHTML = '';
       products.forEach((product) => {
-        this.createNodes(product)
+        this.createItem(product)
         this.handlerClickEdit(product);
       });
     }

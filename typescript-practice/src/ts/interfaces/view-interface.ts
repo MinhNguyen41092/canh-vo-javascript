@@ -13,7 +13,7 @@ export interface IProductView {
   displayImage(): void 
   validator(): void
   createElement(element: string, classes?: Array<string>, id?: string): HTMLElement
-  createNodes(product: IProduct): void
+  createItem(product: IProduct): void
   renderProduct(products: IProduct[]): void
   handlerClickEdit(product: IProduct): void
   getValueInput(): object
