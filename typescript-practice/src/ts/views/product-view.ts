@@ -141,58 +141,56 @@ export class ProductView implements IProductView {
     this.displayImage();
   }
 
+  createElement(element: string, classes?: Array<string>, id?: string) {
+    const e = document.createElement(element);
+    if(id) e.id = id
+    if(classes) {
+      classes.forEach(c => e.classList.add(c))
+    }
+    return e
+  }
+
   // Create nodes
   createNodes(product: IProduct) {
     const id = product.id.toString();
 
-    const productItem = document.createElement('div');
-    productItem.classList.add('product-item');
-    productItem.id = id
-
-    const productAction = document.createElement('div');
-    productAction.classList.add('product-action')
-    const btnEditProduct = document.createElement('button');
-    const iconEdit = document.createElement('li');
-    iconEdit.classList.add('fas');
-    iconEdit.classList.add('fa-edit');
-    iconEdit.classList.add(`edit-product-${id}`);
-    btnEditProduct.append(iconEdit);
+    const productItem = this.createElement('div', ['product-item'], id)
+    const productAction = this.createElement('div', ['product-action'])
+    
+    const btnEditProduct = this.createElement('button')
+    const iconEdit = this.createElement('li', ['fas', 'fa-edit', `edit-product-${id}`])
+    btnEditProduct.append(iconEdit)
     productAction.append(btnEditProduct)
-    const btnDeleteProduct = document.createElement('button');
-    const iconDelete = document.createElement('li');
-    iconDelete.classList.add('fas');
-    iconDelete.classList.add('fa-times');
-    iconDelete.classList.add('delete-product');
-    iconDelete.id = id;
+
+    const btnDeleteProduct = this.createElement('button')
+    const iconDelete = this.createElement('li', ['fas', 'fa-times', 'delete-product'], id)
     btnDeleteProduct.append(iconDelete);
     productAction.append(btnDeleteProduct);
     productItem.append(productAction);
 
-    const imgItem = document.createElement('div');
-    imgItem.classList.add('img-item');
-    const productImg = document.createElement('img');
-    productImg.src = product.img;
-    productImg.classList.add('product-img');
+    const imgItem = this.createElement('div', ['img-item'])
+    
+    const productImg = this.createElement('img', ['product-img']) as HTMLImageElement
+    productImg.src = product.img
     imgItem.append(productImg);
     productItem.append(imgItem);
-    const productInfo = document.createElement('div');
-    productInfo.classList.add('product-info');
-    const productName = document.createElement('p');
-    productName.classList.add('product-name');
+   
+    const productInfo = this.createElement('div', ['product-info'])
+    
+    const productName = this.createElement('p', ['product-name'])
     productName.textContent = product.name;
     productInfo.append(productName);
-    const productPrice = document.createElement('p');
-    productPrice.classList.add('product-price');
+   
+    const productPrice = this.createElement('p', ['product-price'])
     productPrice.textContent = `${product.price}$`;
     productInfo.append(productPrice);
-    const productDes = document.createElement('p');
-    productDes.classList.add('product-des');
+
+    const productDes = this.createElement('p', ['product-des'])
     productDes.textContent = product.des;
     productInfo.append(productDes);
+
     productItem.append(productInfo);
-
     this.productList.append(productItem);
-
   }
 
   // Display product
