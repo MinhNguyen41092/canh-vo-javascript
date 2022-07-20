@@ -141,14 +141,14 @@ export class ProductView implements IProductView {
     this.displayImage();
   }
   
-  /*
- * Returns element after adding class and id.
- *
- * @param {string} element Element want to create.
- * @param {Array<string>} classes List classname want to create in element.
- * @param {string(optional)} id Id want to create in element.
- * @return {HTMLElement} element Element after adding class and id.
- */
+  /** 
+   * Returns element after adding class and id.
+   *
+   * @param {string} element Element want to create.
+   * @param {Array<string>} classes List classname want to create in element.
+   * @param {string(optional)} id Id want to create in element.
+   * @return {HTMLElement} element Element after adding class and id.
+   */
   createElement(element: string, classes?: Array<string>, id?: string) {
     const e = document.createElement(element);
 
